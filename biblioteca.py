@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 livros = []
 usuarios = []
@@ -208,3 +209,7 @@ menu()
 
 
 
+=======
+#teste
+print("Função que descobre o mundo!")
+>>>>>>> b378a72e8ed95b3fa66f0f232d830d36f6934886
