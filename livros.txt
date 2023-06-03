@@ -1,1 +1,2 @@
-Codigo|Titulo|Autor|Ano_publicação|Quant_exemplares
+Codigo|Titulo|Autor|Ano_publicacao|Quant_exemplares
+1|Programar e vida|two|2023|12
