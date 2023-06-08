@@ -296,6 +296,33 @@ def pesquisar_reservas():
     if not encontrado:
         print("Reserva não encontrada.")  # Exibe uma mensagem de erro se a reserva não foi encontrada
 
+def menu_pesquisa():
+    while True:
+        print("\n------------------------------")
+        print("------------------------------\n")
+        print("=== Menu de Pesquisa ===")
+        print("1. Pesquisar livros")
+        print("2. Pesquisar usuários")
+        print("3. Pesquisar reservas")
+        print("4. Voltar")
+
+        opcao = input("Selecione uma opção: ")
+
+        if opcao == "1":
+            pesquisar_livros()
+
+        elif opcao == "2":
+            pesquisar_usuarios()
+
+        elif opcao == "3":
+            pesquisar_reservas()
+
+        elif opcao == "4":
+            break
+
+        else:
+            print("Opção inválida. Tente novamente.")
+
 # Função para listar usuários
 def listar_livros():
     with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
@@ -303,7 +330,6 @@ def listar_livros():
 
     if livros:
         print("Lista de livros:")
-        print("Código | Título | Autor | Ano de Publicação | Quantidade de Exemplares")
         for livro in livros:  # Itera sobre cada livro na lista de livros
             dados_livro = livro.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
             codigo = dados_livro[0]  # Obtém o código do livro
@@ -323,7 +349,6 @@ def listar_usuarios():
 
     if usuarios:
         print("Lista de usuários:")
-        print("Código | Nome | E-mail | Telefone")
         for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
             dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
             codigo = dados_usuario[0]  # Obtém o código do usuário
@@ -342,7 +367,6 @@ def listar_reservas():
 
     if reservas:
         print("Lista de reservas:")
-        print("Código | Usuário | Livro | Data | Status")
         for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
             dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
             codigo = dados_reserva[0]  # Obtém o código da reserva
@@ -362,7 +386,6 @@ def listar_reservas_finalizadas():
 
     if reservas:
         print("Lista de reservas finalizadas:")
-        print("Código | Usuário | Livro | Data | Status")
         for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
             dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
             if dados_reserva[4] == "Finalizada":  # Verifica se o status da reserva é "Finalizada"
@@ -384,10 +407,9 @@ def listar_reservas_ativas():
 
     if reservas:
         print("Lista de reservas ativas:")
-        print("Código | Usuário | Livro | Data | Status")
         for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
             dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-            if dados_reserva[4] == "Ativa":  # Verifica se o status da reserva é "Ativa"
+            if dados_reserva[4].strip() == "Ativa":  # Verifica se o status da reserva é "Ativa"  
                 codigo = dados_reserva[0]  # Obtém o código da reserva
                 usuario = dados_reserva[1]  # Obtém o usuário da reserva
                 livro = dados_reserva[2]  # Obtém o livro da reserva
@@ -398,6 +420,58 @@ def listar_reservas_ativas():
     else:
         print("Nenhuma reserva ativa encontrada.")  # Exibe uma mensagem se não houver reservas cadastradas
 
+#função para remover 
+def remover():
+    while True:
+        print("\n------------------------------")
+        print("------------------------------\n")
+        print("=== Remover ===")
+        print("1. Remover livro")
+        print("2. Remover usuário")
+        print("3. Remover reserva")
+        print("4. Voltar")
+
+        opcao = input("Selecione uma opção: ")
+
+        if opcao == "1":
+            remover_livro()
+        elif opcao == "2":
+            remover_usuario()
+        elif opcao == "3":
+            remover_reserva()
+        elif opcao == "4":
+            print("Voltando...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+#função listagem
+def listagem():
+    while True:
+        print("\n------------------------------")
+        print("------------------------------\n")
+        print("=== Menu de Listagem ===")
+        print("1. Listar livros")
+        print("2. Listar usuários")
+        print("3. Listar reservas")
+        print("4. Listar reservas ativas")
+        print("5. Listar reservas finalizadas")
+        print("6. Voltar")
+        opcao = input("Selecione uma opção: ")
+        if opcao == "1":
+            listar_livros()
+        elif opcao == "2":
+            listar_usuarios()
+        elif opcao == "3":
+            listar_reservas()
+        elif opcao == "4":
+            listar_reservas_ativas()
+        elif opcao == "5":
+            listar_reservas_finalizadas()
+        elif opcao == "6":
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
 
 # Função para gerar relatório
 def gerar_relatorio():
@@ -434,6 +508,7 @@ def gerar_relatorio():
 # Função principal
 def main():
     while True:
+        print("\n")
         print("======= MENU =======")
         print("1. Cadastrar livro")
         print("2. Cadastrar usuário")
@@ -441,19 +516,11 @@ def main():
         print("4. Devolver livro")
         print("5. Alterar livro")
         print("6. Alterar usuário")
-        print("7. Remover livro")
-        print("8. Remover usuário")
-        print("9. Remover reserva")
-        print("10. Pesquisar livros")
-        print("11. Pesquisar usuários")
-        print("12. Pesquisar reservas")
-        print("13. Listar usuários")
-        print("14. Listar livros")
-        print("15. Listar reservas")
-        print("16. Listar reservas ativas")
-        print("17. Listar reservas finalizadas")
-        print("18. Gerar relatório")
-        print("19. Encerrar programa")
+        print("7. Remover ")
+        print("8. Pesquisar")
+        print("9. listagem")
+        print("10. gerar relatorio")
+        print("0. Encerrar programa")
 
         opcao = input("Digite o número da opção desejada: ")
 
@@ -470,30 +537,14 @@ def main():
         elif opcao == "6":
             alterar_usuario()
         elif opcao == "7":
-            remover_livro()
+            remover()
         elif opcao == "8":
-            remover_usuario()
+            menu_pesquisa()
         elif opcao == "9":
-            remover_reserva()
+            listagem()
         elif opcao == "10":
-            pesquisar_livros()
-        elif opcao == "11":
-            pesquisar_usuarios()
-        elif opcao == "12":
-            pesquisar_reservas()
-        elif opcao == "13":
-            listar_usuarios()
-        elif opcao == "14":
-            listar_livros()
-        elif opcao == "15":
-            listar_reservas()
-        elif opcao == "16":
-            listar_reservas_ativas()
-        elif opcao == "17":
-            listar_reservas_finalizadas()
-        elif opcao == "18":
             gerar_relatorio()
-        elif opcao == "19":
+        elif opcao == "0":
             print("Encerrando o programa...")
             break
         else:
@@ -501,3 +552,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+   
