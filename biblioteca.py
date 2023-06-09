@@ -5,6 +5,11 @@ import os  # Importa a biblioteca 'os', que possui várias funções, mas neste 
 def limpar():  # Define a função 'limpar' para limpar o terminal e deixá-lo mais organizado.
  os.system("cls")  # Chama a função 'system' do módulo 'os' para executar o comando "cls", que limpa o terminal no Windows.
 
+ #cria os arquivos txt
+arquivo =  open("livros.txt","w+")
+arquivo = open("usuarios.txt","w+")
+arquivo = open("reservas.txt","w+")
+ 
 # Função para verificar se o arquivo está vazio e, caso esteja, adiciona o nome das categorias
 def arquivo_vazio(arquivo):
     with open(arquivo, "r") as leitura:  # Abre o arquivo especificado em modo de leitura
