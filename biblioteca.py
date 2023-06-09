@@ -5,19 +5,14 @@ import os  # Importa a biblioteca 'os', que possui várias funções, mas neste 
 def limpar():  # Define a função 'limpar' para limpar o terminal e deixá-lo mais organizado.
  os.system("cls")  # Chama a função 'system' do módulo 'os' para executar o comando "cls", que limpa o terminal no Windows.
 
- #cria os arquivos txt
-arquivo =  open("livros.txt","w+")
-arquivo = open("usuarios.txt","w+")
-arquivo = open("reservas.txt","w+")
- 
 # Função para verificar se o arquivo está vazio e, caso esteja, adiciona o nome das categorias
 def arquivo_vazio(arquivo):
     with open(arquivo, "r") as leitura:  # Abre o arquivo especificado em modo de leitura
         conteudo = leitura.read()  # Lê o conteúdo do arquivo e o armazena na variável 'conteudo'
         return len(conteudo) == 0  # Retorna True se o tamanho do conteúdo for igual a zero, indicando que o arquivo está vazio
     #resumo essa função e para verificar se existe cabeçalho 
-def codigo_existente(nome_arquivo, codigo):
-    with open(nome_arquivo, "r") as arquivo_leitura:
+def codigo_existente(arquivo, codigo):
+    with open(arquivo, "r") as arquivo_leitura:
         # Verifica se o código já existe no arquivo
         for linha in arquivo_leitura:
             campos = linha.strip().split("|")
@@ -26,6 +21,7 @@ def codigo_existente(nome_arquivo, codigo):
     return False
 # Função para cadastrar um livro
 def cadastrar_livro():
+    arquivo =  open("livros.txt","a")
     while True: # enquanto fou verdade
         codigo = input("\nDigite o código do Livro: ") #solicitar ao usuario o codigo
         if codigo_existente("livros.txt", codigo): # chama a função para verificar se o codigo do usuario ja esta em uso
@@ -62,6 +58,7 @@ def cadastrar_livro():
 
 # Função para cadastrar usuário
 def cadastrar_usuario():
+    arquivo = open("usuarios.txt","a")
     # Solicita o código do usuário ao usuário
     while True: # enquanto fou verdade
         codigo = input("\nDigite o código do usuário: ") #solicitar ao usuario o codigo
@@ -123,42 +120,54 @@ def cadastrar_usuario():
     else:
         print("--------------------------------\nUsuário cadastrado sem telefone!\n--------------------------------")
 
-
-
+    
+#reserva livro
 def reservar_livro():
-    # Função para reservar um livro
-    while True: # enquanto fou verdade
-        codigo_reserva = input("\nDigite o código da reserva:: ") #solicitar o codigo da reserva ao usuario
-        if codigo_existente("usuarios.txt", codigo_reserva): # chama a função para verificar se o codigo do usuario ja esta em uso
-            print("--------------------------------\nO código já está em uso. Insira um código diferente.") #exibir mensagem
-        else:
-            break # sai do loop se o codigo nao existir
-    codigo_usuario = input("Digite o código do usuário: ")  # Solicita o código do usuário ao usuário
-    codigo_livro = input("Digite o código do livro: ")  # Solicita o código do livro ao usuário
+    arquivo = open("reservas.txt","a")
+    arquivo_reservas = "reservas.txt"
+    # Verifica se o arquivo de reservas existe e cria o cabeçalho se necessário
+    if arquivo_vazio(arquivo_reservas):
+        with open(arquivo_reservas, "w") as arquivo_criacao:
+            arquivo_criacao.write("Codigo | Codigo do Usuario | Codigo do Livro | Data | Status\n")
 
-    # Verifica se existem usuários cadastrados
+    with open(arquivo_reservas, "r") as arquivo:
+        reservas = arquivo.readlines()
+
+    while True:
+        codigo = input("\nDigite o código da reserva: ")
+        codigo_repetido = False
+        for linha in reservas[1:]:
+            campos = linha.strip().split("|")
+            if campos[0].strip() == codigo:
+                codigo_repetido = True
+                if "Finalizada" in campos[4].strip():
+                    print("Não é possível fazer uma reserva para uma reserva finalizada.")
+                    return
+                else:
+                    print("--------------------------------\nO código já está em uso. Insira um código diferente.")
+                break
+        if not codigo_repetido:
+            break
+
+    codigo_usuario = input("Digite o código do usuário: ")
+    codigo_livro = input("Digite o código do livro: ")
+
     if not codigo_existente("usuarios.txt", codigo_usuario):
         print("Usuário não encontrado. Cadastre o usuário antes de fazer a reserva.")
         return
-    # Verifica se existem livros cadastrados
-    # Verifica se o livro não existe no arquivo "livros.txt"
+
     if not codigo_existente("livros.txt", codigo_livro):
         print("Livro não encontrado. Cadastre o livro antes de fazer a reserva.")
         return
-    data = datetime.now().strftime("%d/%m/%Y")  # Obtém a data atual no formato DD/MM/AAAA
-    status = "Ativa"  # Define o status da reserva como "Ativa"
 
-    linha_desejada = "Codigo | Usuario | Livro | Data | Status"  # Define a linha desejada no arquivo
-    arquivo = "reservas.txt"  # Define o nome do arquivo onde as reservas serão registradas
+    data = datetime.now().strftime("%d/%m/%Y")
+    status = "Ativa"
+    linha_reserva = f"{codigo} | {codigo_usuario} | {codigo_livro} | {data} | {status}\n"
 
-    with open(arquivo, "a+") as arquivo_leitura:
-        arquivo_leitura.seek(0)  # Volta para o início do arquivo
-        if linha_desejada not in arquivo_leitura.read():  # Verifica se a linha desejada já existe no arquivo
-            arquivo_leitura.write(linha_desejada + "\n")  # Se não existir, escreve a linha desejada no arquivo
-    with open(arquivo, "a") as arquivo_escrita:  # Abre o arquivo no modo de escrita, adicionando ao final do arquivo
-        arquivo_escrita.write(f"{codigo_reserva} | {codigo_usuario} | {codigo_livro} | {data} | {status}\n")  # Escreve os dados da reserva no arquivo
+    with open(arquivo_reservas, "a") as arquivo:
+        arquivo.write(linha_reserva)
 
-    print("--------------------------------\nReserva realizada com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso ao usuário
+    print("--------------------------------\nReserva realizada com sucesso!\n--------------------------------")
 
 
 
