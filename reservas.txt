@@ -1,2 +1,3 @@
-Codigo|Usuario|Livro|Data|Status
-1|1|1|03/06/2023|Ativa
+Codigo | Codigo do Usuario | Codigo do Livro | Data | Status
+1 | 1 | 1 | 09/06/2023 | Ativa
+2 | 1 | 1 | 09/06/2023 | Ativa
