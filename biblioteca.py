@@ -201,213 +201,226 @@ def devolver_livro():
         print("--------------------------------\nReserva não encontrada.\n--------------------------------")  # Exibe uma mensagem de erro se a reserva não foi encontrada
 
 
-# Função para alterar livro
-def alterar_livro():
-    codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
-    livros = []  # Cria uma lista vazia para armazenar os livros
 
-    with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
-        livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de livros
+# Função para alterar livr
+def alterar():
+    while True:
+        print("\n=======Menu=======\n")
+        print("1. Alterar livros")
+        print("2. Alterar Usuários")
+        print("3. Alterar Reservas")
+        print("4. Voltar")
+        opcao = input("Selecione uma opção: ")
+        if opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4":
+            print("Opção incorreta. Por favor, tente novamente!")
+        if opcao == "1":
+            codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
+            livros = []  # Cria uma lista vazia para armazenar os livros
 
-    encontrou_livro = False  # Variável para indicar se o livro foi encontrado ou não
+            with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
+                livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de livros
 
-    with open("livros.txt", "w") as arquivo:  # Abre o arquivo de livros no modo de escrita, sobrescrevendo o arquivo existente
-        for livro in livros:  # Itera sobre cada livro na lista de livros
-            dados_livro = livro.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-            if dados_livro[0] == codigo_livro:  # Verifica se o código do livro atual é igual ao código fornecido pelo usuário
-                encontrou_livro = True  # Marca que o livro foi encontrado
-                titulo = input("Digite o novo título do livro: ")  # Solicita o novo título do livro ao usuário
-                autor = input("Digite o novo autor do livro: ")  # Solicita o novo autor do livro ao usuário
-                ano_publicacao = input("Digite o novo ano de publicação do livro: ")  # Solicita o novo ano de publicação do livro ao usuário
-                quant_exemplares = input("Digite a nova quantidade de exemplares do livro: ")  # Solicita a nova quantidade de exemplares do livro ao usuário
-                dados_livro[1] = titulo  # Atualiza o título do livro
-                dados_livro[2] = autor  # Atualiza o autor do livro
-                dados_livro[3] = ano_publicacao  # Atualiza o ano de publicação do livro
-                dados_livro[4] = quant_exemplares  # Atualiza a quantidade de exemplares do livro
-                arquivo.write("|".join(dados_livro) + "\n")  # Escreve os dados atualizados do livro no arquivo
+            encontrou_livro = False  # Variável para indicar se o livro foi encontrado ou não
+
+            with open("livros.txt", "w") as arquivo:  # Abre o arquivo de livros no modo de escrita, sobrescrevendo o arquivo existente
+                for livro in livros:  # Itera sobre cada livro na lista de livros
+                    dados_livro = livro.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                    if dados_livro[0] == codigo_livro:  # Verifica se o código do livro atual é igual ao código fornecido pelo usuário
+                        encontrou_livro = True  # Marca que o livro foi encontrado
+                        titulo = input("Digite o novo título do livro: ")  # Solicita o novo título do livro ao usuário
+                        autor = input("Digite o novo autor do livro: ")  # Solicita o novo autor do livro ao usuário
+                        ano_publicacao = input("Digite o novo ano de publicação do livro: ")  # Solicita o novo ano de publicação do livro ao usuário
+                        quant_exemplares = input("Digite a nova quantidade de exemplares do livro: ")  # Solicita a nova quantidade de exemplares do livro ao usuário
+                        dados_livro[1] = titulo  # Atualiza o título do livro
+                        dados_livro[2] = autor  # Atualiza o autor do livro
+                        dados_livro[3] = ano_publicacao  # Atualiza o ano de publicação do livro
+                        dados_livro[4] = quant_exemplares  # Atualiza a quantidade de exemplares do livro
+                        arquivo.write("|".join(dados_livro) + "\n")  # Escreve os dados atualizados do livro no arquivo
+                    else:
+                        arquivo.write(livro)  # Escreve o livro original no arquivo, sem alterações
+                        
+            if encontrou_livro:
+                print("--------------------------------\nLivro alterado com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o livro foi encontrado e atualizado
             else:
-                arquivo.write(livro)  # Escreve o livro original no arquivo, sem alterações
-                
-    if encontrou_livro:
-        print("--------------------------------\nLivro alterado com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o livro foi encontrado e atualizado
-    else:
-        print("--------------------------------\nLivro não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o livro não foi encontrado
+                print("--------------------------------\nLivro não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o livro não foi encontrado
 
-# Função para alterar usuário
-def alterar_usuario():
-    codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")  # Solicita o código do usuário ao usuário
-    usuarios = []  # Cria uma lista vazia para armazenar os usuários
+        if opcao =="2":
+            # Função para alterar usuário
+            codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")
+            usuarios = []
 
-    with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
-        usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
+            with open("usuarios.txt", "r") as arquivo:
+                usuarios = arquivo.readlines()
 
-    encontrou_usuario = False  # Variável para indicar se o usuário foi encontrado ou não
+            encontrou_usuario = False
 
-    with open("usuarios.txt", "w") as arquivo:  # Abre o arquivo de usuários no modo de escrita, sobrescrevendo o arquivo existente
-        for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
-            dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-            if dados_usuario[0] == codigo_usuario:  # Verifica se o código do usuário atual é igual ao código fornecido pelo usuário
-                encontrou_usuario = True  # Marca que o usuário foi encontrado
-                nome = input("Digite o novo nome do usuário: ")  # Solicita o novo nome do usuário ao usuário
-                email = input("Digite o novo e-mail do usuário: ")  # Solicita o novo e-mail do usuário ao usuário
-                telefone = input("Digite o novo telefone do usuário: ")  # Solicita o novo telefone do usuário ao usuário
-                dados_usuario[1] = nome  # Atualiza o nome do usuário
-                dados_usuario[2] = email  # Atualiza o e-mail do usuário
-                dados_usuario[3] = telefone  # Atualiza o telefone do usuário
-                arquivo.write("|".join(dados_usuario) + "\n")  # Escreve os dados atualizados do usuário no arquivo
+            with open("usuarios.txt", "w") as arquivo:
+                for usuario in usuarios:
+                    dados_usuario = usuario.strip().split("|")
+                    if dados_usuario[0] == codigo_usuario:
+                        encontrou_usuario = True
+                        nome = input("Digite o novo nome do usuário: ")
+                        email = input("Digite o novo e-mail do usuário: ")
+
+                        # Loop para garantir que o usuário digite um telefone válido ou escolha não fornecer telefone
+                        while True:
+                            resposta = input("Deseja digitar o número de telefone? (s/n): ")
+                            if resposta.lower() == "s":
+                                telefone = input("Digite o novo telefone do usuário: ")
+                                if len(telefone) == 11:
+                                    try:
+                                        # Formata o telefone no formato desejado
+                                        telefone_formatado = f"+55 {telefone[:2]} {telefone[2:7]} {telefone[7:]}"
+                                        dados_usuario[3] = telefone_formatado
+                                        break
+                                    except ValueError:
+                                        print("O número de telefone deve conter apenas dígitos numéricos. Tente novamente.")
+                                else:
+                                    print("O número de telefone deve conter 11 dígitos. Tente novamente.")
+                            elif resposta.lower() == "n":
+                                break
+                            else:
+                                print("Resposta inválida. Digite 's' para sim ou 'n' para não.")
+
+                        dados_usuario[1] = nome
+                        dados_usuario[2] = email
+                        arquivo.write("|".join(dados_usuario) + "\n")
+                    else:
+                        arquivo.write(usuario)
+
+            if encontrou_usuario:
+                print("--------------------------------\nUsuário alterado com sucesso!\n--------------------------------")
             else:
-                arquivo.write(usuario)  # Escreve o usuário original no arquivo, sem alterações
-
-    if encontrou_usuario:
-        print("--------------------------------\nUsuário alterado com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o usuário foi encontrado e atualizado
-    else:
-        print("Usuário não encontrado.")  # Exibe uma mensagem de erro se o usuário não foi encontrado
+                print("--------------------------------\nUsuário não encontrado.\n--------------------------------")
 
 
-def remover_livro():
-    codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
-    livro_encontrado = False  # Variável para indicar se o livro foi encontrado ou não
+        if opcao == "3":
+            # Função para alterar reservas
+            codigo_reserva = input("--------------------------------\nDigite o código da reserva: ")  # Solicita o código da reserva ao usuário
+            reservas = []  # Cria uma lista vazia para armazenar as reservas
 
-    with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
-        linhas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena em uma lista
+            with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
+                reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
 
-    with open("livros.txt", "w") as arquivo:  # Abre o arquivo de livros no modo de escrita, sobrescrevendo o arquivo existente
-        for linha in linhas:  # Itera sobre cada linha do arquivo
-            dados_livro = linha.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-            if dados_livro[0] != codigo_livro:  # Verifica se o código do livro atual é diferente do código fornecido pelo usuário
-                arquivo.write(linha)  # Escreve a linha no arquivo, exceto a linha correspondente ao livro a ser removido
-            else:
-                livro_encontrado = True  # Marca que o livro foi encontrado e será removido
+            encontrou_reserva = False  # Variável para indicar se a reserva foi encontrada ou não
 
-    if livro_encontrado:
-        print("--------------------------------\nLivro removido com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o livro foi encontrado e removido
-    else:
-        print("--------------------------------\nLivro não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o livro não foi encontrado
+            with open("reservas.txt", "w") as arquivo:  # Abre o arquivo de reservas no modo de escrita, sobrescrevendo o arquivo existente
+                for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
+                    dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                    if dados_reserva[0].strip() == codigo_reserva.strip():  # Verifica se o código da reserva atual é igual ao código fornecido pelo usuário (após remover os espaços em branco)
+                        encontrou_reserva = True  # Marca que a reserva foi encontrada
+                        data_reserva = input("Digite a nova data da reserva (DD/MM/AAAA): ")  # Solicita a nova data da reserva ao usuário
+                        status_reserva = input("Digite o novo status da reserva (ativa/finalizada): ")  # Solicita o novo status da reserva ao usuário
+                        
+                        # Verifica se o valor do status é válido (ativa ou finalizada)
+                        if status_reserva.lower() == "ativa" or status_reserva.lower() == "finalizada":
+                            dados_reserva[3] = data_reserva  # Atualiza a data da reserva (índice 3, considerando a posição dos dados)
+                            dados_reserva[4] = status_reserva  # Atualiza o status da reserva (índice 4, considerando a posição dos dados)
+                            arquivo.write("|".join(dados_reserva) + "\n")  # Escreve os dados atualizados da reserva no arquivo
+                            print("--------------------------------\nReserva alterada com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se a reserva foi encontrada e atualizada
+                        else:
+                            print("--------------------------------\nValor inválido para o status da reserva. A reserva não foi alterada.\n--------------------------------")  # Exibe uma mensagem de erro se o valor do status não for válido
+                            arquivo.write(reserva)  # Escreve a reserva original no arquivo, sem alterações
+                    else:
+                        arquivo.write(reserva)  # Escreve a reserva original no arquivo, sem alterações
 
-# Função para remover usuário
-def remover_usuario():
-    codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")  # Solicita o código do usuário ao usuário
-    usuarios = []  # Cria uma lista vazia para armazenar os usuários
+            if not encontrou_reserva:
+                print("--------------------------------\nReserva não encontrada.\n--------------------------------")  # Exibe uma mensagem de erro se a reserva não foi encontrada
 
-    with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
-        usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
+        #voltar menu
+        elif opcao == "4":
+            print("voltando...")
+            break
 
-    encontrou_usuario = False  # Variável para indicar se o usuário foi encontrado ou não
+#Função para remover
 
-    if usuarios:
-        with open("usuarios.txt", "w") as arquivo:  # Abre o arquivo de usuários no modo de escrita, sobrescrevendo o arquivo existente
-            for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
-                dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-                if dados_usuario[0] == codigo_usuario:  # Verifica se o código do usuário atual é igual ao código fornecido pelo usuário
-                    encontrou_usuario = True  # Marca que o usuário foi encontrado e será removido
+#Função para remover
+def remover():
+    while True:
+            print("\n------------------------------")
+            print("------------------------------\n")
+            print("=== Remover ===")
+            print("1. Remover livro")
+            print("2. Remover usuário")
+            print("3. Remover reserva")
+            print("4. Voltar")
+            #menu de remover
+            opcao = input("Selecione uma opção: ")
+            if opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4":
+                print("Opção incorreta. Por favor, tente novamente!")
+            if opcao == "1":
+                codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
+                livro_encontrado = False  # Variável para indicar se o livro foi encontrado ou não
+
+                with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
+                    linhas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena em uma lista
+
+                with open("livros.txt", "w") as arquivo:  # Abre o arquivo de livros no modo de escrita, sobrescrevendo o arquivo existente
+                    for linha in linhas:  # Itera sobre cada linha do arquivo
+                        dados_livro = linha.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                        if dados_livro[0] != codigo_livro:  # Verifica se o código do livro atual é diferente do código fornecido pelo usuário
+                            arquivo.write(linha)  # Escreve a linha no arquivo, exceto a linha correspondente ao livro a ser removido
+                        else:
+                            livro_encontrado = True  # Marca que o livro foi encontrado e será removido
+
+                if livro_encontrado:
+                    print("--------------------------------\nLivro removido com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o livro foi encontrado e removido
                 else:
-                    arquivo.write(usuario)  # Escreve o usuário no arquivo, exceto o usuário que será removido
+                    print("--------------------------------\nLivro não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o livro não foi encontrado
 
-    if encontrou_usuario:
-        print("--------------------------------\nUsuário removido com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o usuário foi encontrado e removido
-    else:
-        print("--------------------------------\nUsuário não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o usuário não foi encontrado
+            # Função para remover usuário
+            if opcao == "2":
+                codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")  # Solicita o código do usuário ao usuário
+                usuarios = []  # Cria uma lista vazia para armazenar os usuários
 
-# Função para remover reserva
-def remover_reserva():
-    codigo_reserva = input("--------------------------------\nDigite o código da reserva: ")  # Solicita o código da reserva ao usuário
-    reservas = []  # Cria uma lista vazia para armazenar as reservas
+                with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
+                    usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
 
-    with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
-        reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+                encontrou_usuario = False  # Variável para indicar se o usuário foi encontrado ou não
 
-    encontrou_reserva = False  # Variável para indicar se a reserva foi encontrada ou não
+                if usuarios:
+                    with open("usuarios.txt", "w") as arquivo:  # Abre o arquivo de usuários no modo de escrita, sobrescrevendo o arquivo existente
+                        for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
+                            dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                            if dados_usuario[0] == codigo_usuario:  # Verifica se o código do usuário atual é igual ao código fornecido pelo usuário
+                                encontrou_usuario = True  # Marca que o usuário foi encontrado e será removido
+                            else:
+                                arquivo.write(usuario)  # Escreve o usuário no arquivo, exceto o usuário que será removido
 
-    with open("reservas.txt", "w") as arquivo:  # Abre o arquivo de reservas no modo de escrita, sobrescrevendo o arquivo existente
-        for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
-            dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-            if dados_reserva[0].strip() == codigo_reserva.strip():  # Verifica se o código da reserva atual é igual ao código fornecido pelo usuário (removendo espaços em branco)
-                encontrou_reserva = True  # Marca que a reserva foi encontrada e será removida
-            else:
-                arquivo.write(reserva)  # Escreve a reserva no arquivo, exceto a reserva que será removida
+                if encontrou_usuario:
+                    print("--------------------------------\nUsuário removido com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se o usuário foi encontrado e removido
+                else:
+                    print("--------------------------------\nUsuário não encontrado.\n--------------------------------")  # Exibe uma mensagem de erro se o usuário não foi encontrado
 
-    if encontrou_reserva:
-        print("--------------------------------\nReserva removida com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se a reserva foi encontrada e removida
-    else:
-        print("--------------------------------\nReserva não encontrada.\n--------------------------------")  # Exibe uma mensagem de erro se a reserva não foi encontrada
+            # Função para remover reserva
+            if opcao =="3":
+                codigo_reserva = input("--------------------------------\nDigite o código da reserva: ")  # Solicita o código da reserva ao usuário
+                reservas = []  # Cria uma lista vazia para armazenar as reservas
+
+                with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
+                    reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+
+                encontrou_reserva = False  # Variável para indicar se a reserva foi encontrada ou não
+
+                with open("reservas.txt", "w") as arquivo:  # Abre o arquivo de reservas no modo de escrita, sobrescrevendo o arquivo existente
+                    for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
+                        dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                        if dados_reserva[0].strip() == codigo_reserva.strip():  # Verifica se o código da reserva atual é igual ao código fornecido pelo usuário (removendo espaços em branco)
+                            encontrou_reserva = True  # Marca que a reserva foi encontrada e será removida
+                        else:
+                            arquivo.write(reserva)  # Escreve a reserva no arquivo, exceto a reserva que será removida
+
+                if encontrou_reserva:
+                    print("--------------------------------\nReserva removida com sucesso!\n--------------------------------")  # Exibe uma mensagem de sucesso se a reserva foi encontrada e removida
+                else:
+                    print("--------------------------------\nReserva não encontrada.\n--------------------------------")  # Exibe uma mensagem de erro se a reserva não foi encontrada
+            if opcao == "4":
+                print("Voltando...")
+                break
 
 # Função para pesquisar livros
-def pesquisar_livros():
-    codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
-    livros = []  # Cria uma lista vazia para armazenar os livros
-
-    with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
-        livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de livros
-
-    encontrado = False  # Variável para indicar se o livro foi encontrado ou não
-
-    for livro in livros:  # Itera sobre cada livro na lista de livros
-        dados_livro = livro.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-        if dados_livro[0] == codigo_livro:  # Verifica se o código do livro atual é igual ao código fornecido pelo usuário
-            print("Livro encontrado:")
-            print(f"Código: {dados_livro[0]}")
-            print(f"Título: {dados_livro[1]}")
-            print(f"Autor: {dados_livro[2]}")
-            print(f"Ano de Publicação: {dados_livro[3]}")
-            print(f"Quantidade de Exemplares: {dados_livro[4]}")
-            encontrado = True
-            break
-
-    if not encontrado:
-        print("Livro não encontrado.")  # Exibe uma mensagem de erro se o livro não foi encontrado
-
-# Função para pesquisar usuários
-def pesquisar_usuarios():
-    codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")  # Solicita o código do usuário ao usuário
-    usuarios = []  # Cria uma lista vazia para armazenar os usuários
-
-    with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
-        usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
-
-    encontrado = False  # Variável para indicar se o usuário foi encontrado ou não
-
-    for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
-        dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-        if dados_usuario[0] == codigo_usuario:  # Verifica se o código do usuário atual é igual ao código fornecido pelo usuário
-            print("------------------------\nUsuário encontrado:\n------------------------")
-            print(f"Código: {dados_usuario[0]}")
-            print(f"Nome: {dados_usuario[1]}")
-            print(f"E-mail: {dados_usuario[2]}")
-            print(f"Telefone: {dados_usuario[3]}")
-            encontrado = True
-            break
-
-    if not encontrado:
-        print("Usuário não encontrado.")  # Exibe uma mensagem de erro se o usuário não foi encontrado
-
-# Função para pesquisar reservas
-def pesquisar_reservas():
-    codigo_reserva = input("Digite o código da reserva: ")  # Solicita o código da reserva ao usuário
-    reservas = []  # Cria uma lista vazia para armazenar as reservas
-
-    with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
-        reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
-
-    encontrado = False  # Variável para indicar se a reserva foi encontrada ou não
-
-    for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
-        dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
-        if dados_reserva[0].strip() == codigo_reserva.strip():  # Verifica se o código da reserva atual é igual ao código fornecido pelo usuário
-            print()
-            print("Reserva encontrada:")
-            print(f"Código: {dados_reserva[0]}")
-            print(f"Usuário: {dados_reserva[1]}")
-            print(f"Livro: {dados_reserva[2]}")
-            print(f"Data: {dados_reserva[3]}")
-            print(f"Status: {dados_reserva[4]}")
-            encontrado = True
-            break
-
-    if not encontrado:
-        print()
-        print("Reserva não encontrada.")  # Exibe uma mensagem de erro se a reserva não foi encontrada
-
-def menu_pesquisa():
+    # Função para pesquisar livros
+def pesquisar():
     while True:
         print("\n------------------------------")
         print("------------------------------\n")
@@ -416,120 +429,89 @@ def menu_pesquisa():
         print("2. Pesquisar usuários")
         print("3. Pesquisar reservas")
         print("4. Voltar")
-
+        # M3nu pesquisar
         opcao = input("Selecione uma opção: ")
-
+        if opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4":
+            print("Opção incorreta. Por favor, tente novamente!")
         if opcao == "1":
-            pesquisar_livros()
+            codigo_livro = input("--------------------------------\nDigite o código do livro: ")  # Solicita o código do livro ao usuário
+            livros = []  # Cria uma lista vazia para armazenar os livros
 
-        elif opcao == "2":
-            pesquisar_usuarios()
+            with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
+                livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de livros
 
-        elif opcao == "3":
-            pesquisar_reservas()
+            encontrado = False  # Variável para indicar se o livro foi encontrado ou não
 
-        elif opcao == "4":
-            break
+            for livro in livros:  # Itera sobre cada livro na lista de livros
+                dados_livro = livro.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                if dados_livro[0] == codigo_livro:  # Verifica se o código do livro atual é igual ao código fornecido pelo usuário
+                    print("Livro encontrado:")
+                    print(f"Código: {dados_livro[0]}")
+                    print(f"Título: {dados_livro[1]}")
+                    print(f"Autor: {dados_livro[2]}")
+                    print(f"Ano de Publicação: {dados_livro[3]}")
+                    print(f"Quantidade de Exemplares: {dados_livro[4]}")
+                    encontrado = True
+                    break
 
-        else:
-            print("Opção inválida. Tente novamente.")
+            if not encontrado:
+                print("Livro não encontrado.")  # Exibe uma mensagem de erro se o livro não foi encontrado
 
-# Função para listar usuários
-def listar_livros():
-    with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
-        livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena em uma lista
+        # Função para pesquisar usuários
+        if opcao =="2":
+            codigo_usuario = input("--------------------------------\nDigite o código do usuário: ")  # Solicita o código do usuário ao usuário
+            usuarios = []  # Cria uma lista vazia para armazenar os usuários
 
-    if len(livros) <= 1:
-        print("Não há livros cadastrados.")
-    else:
-        for i in range(len(livros)):
-            print(livros[i].strip())
+            with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
+                usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
 
-# funçao listar usuarios cadastrados
-def listar_usuarios():
-    with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
-        usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
+            encontrado = False  # Variável para indicar se o usuário foi encontrado ou não
 
-    if len(usuarios) <= 1:
-        print("Não há usuários cadastrados.")
-    else:
-        for i in range(len(usuarios)):
-            print(usuarios[i].strip())  # Exibe o usuário atual da lista removendo os espaços em branco no início e fim
+            for usuario in usuarios:  # Itera sobre cada usuário na lista de usuários
+                dados_usuario = usuario.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                if dados_usuario[0] == codigo_usuario:  # Verifica se o código do usuário atual é igual ao código fornecido pelo usuário
+                    print("------------------------\nUsuário encontrado:\n------------------------")
+                    print(f"Código: {dados_usuario[0]}")
+                    print(f"Nome: {dados_usuario[1]}")
+                    print(f"E-mail: {dados_usuario[2]}")
+                    print(f"Telefone: {dados_usuario[3]}")
+                    encontrado = True
+                    break
 
-#listar reservas
-def listar_reservas():
-    with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
-        reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+            if not encontrado:
+                print("Usuário não encontrado.")  # Exibe uma mensagem de erro se o usuário não foi encontrado
 
-    if len(reservas) <= 1:
-        print("Não há reservas cadastradas.")
-    else:
-        print("Lista de reservas:")
-        for reserva in reservas[1:]:  # Itera sobre cada reserva na lista de reservas, começando do índice 1
-            codigo, usuario, livro, data, status = reserva.strip().split("|")  # Divide os dados da reserva
-            print(f"{codigo} | {usuario} | {livro} | {data} | {status}")  # Exibe os dados da reserva formatados
-        print("\n")  # Exibe uma linha em branco para separar as informações na saída
+        # Função para pesquisar reservas
+        if opcao == "3":
+            codigo_reserva = input("Digite o código da reserva: ")  # Solicita o código da reserva ao usuário
+            reservas = []  # Cria uma lista vazia para armazenar as reservas
 
-#reservas finalizada
-def listar_reservas_finalizadas():
-    with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
-        reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+            with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
+                reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
 
-    reservas_finalizadas = [reserva.strip().split("|") for reserva in reservas if reserva.strip().split("|")[4] == "Finalizada"]
+            encontrado = False  # Variável para indicar se a reserva foi encontrada ou não
 
-    if reservas_finalizadas:
-        print("Lista de reservas finalizadas:")
-        for reserva in reservas_finalizadas:
-            codigo, usuario, livro, data, status = reserva
-            print(f"{codigo} | {usuario} | {livro} | {data} | {status}")
-        print("\n")
-    else:
-        print("Não há reservas finalizadas.")
+            for reserva in reservas:  # Itera sobre cada reserva na lista de reservas
+                dados_reserva = reserva.strip().split("|")  # Remove os espaços em branco no início e fim da linha e divide os dados pelo caractere "|"
+                if dados_reserva[0].strip() == codigo_reserva.strip():  # Verifica se o código da reserva atual é igual ao código fornecido pelo usuário
+                    print()
+                    print("Reserva encontrada:")
+                    print(f"Código: {dados_reserva[0]}")
+                    print(f"Usuário: {dados_reserva[1]}")
+                    print(f"Livro: {dados_reserva[2]}")
+                    print(f"Data: {dados_reserva[3]}")
+                    print(f"Status: {dados_reserva[4]}")
+                    encontrado = True
+                    break
 
-
-
-# Função para listar reservas ativas
-def listar_reservas_ativas():
-    with open("reservas.txt", "r") as arquivo:
-        reservas = arquivo.readlines()
-
-    reservas_ativas = [reserva.strip().split("|") for reserva in reservas if reserva.strip().split("|")[4].strip() == "Ativa"]
-
-    if reservas_ativas:
-        print("Lista de reservas ativas:")
-        for reserva in reservas_ativas:
-            codigo, usuario, livro, data, status = reserva
-            print(f"{codigo} | {usuario} | {livro} | {data} | {status}")
-        print("\n"*2)
-    else:
-        print("Nenhuma reserva ativa encontrada.")
-
-#função para remover 
-def remover():
-    while True:
-        print("\n------------------------------")
-        print("------------------------------\n")
-        print("=== Remover ===")
-        print("1. Remover livro")
-        print("2. Remover usuário")
-        print("3. Remover reserva")
-        print("4. Voltar")
-        #menu de remover
-        opcao = input("Selecione uma opção: ")
-
-        if opcao == "1":
-            remover_livro()
-        elif opcao == "2":
-            remover_usuario()
-        elif opcao == "3":
-            remover_reserva()
-        elif opcao == "4":
+            if not encontrado:
+                print()
+                print("Reserva não encontrada.")  # Exibe uma mensagem de erro se a reserva não foi encontrada
+        if opcao == "4":
             print("Voltando...")
             break
-        else:
-            print("Opção inválida. Tente novamente.")
 
-#função listagem
+# Função para listar 
 def listagem():
     while True:
         print("\n------------------------------")
@@ -543,20 +525,80 @@ def listagem():
         print("6. Voltar")
         #menu de listagem
         opcao = input("Selecione uma opção: ")
+        if opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4" and opcao != "5" and opcao != "6":
+            print("Opção incorreta. Por favor, tente novamente!")
+        #listagem de livros
         if opcao == "1":
-            listar_livros()
-        elif opcao == "2":
-            listar_usuarios()
-        elif opcao == "3":
-            listar_reservas()
-        elif opcao == "4":
-            listar_reservas_ativas()
-        elif opcao == "5":
-            listar_reservas_finalizadas()
-        elif opcao == "6":
+            with open("livros.txt", "r") as arquivo:  # Abre o arquivo de livros no modo de leitura
+                livros = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena em uma lista
+
+            if len(livros) <= 1:
+                print("Não há livros cadastrados.")
+            else:
+                for i in range(len(livros)):
+                    print(livros[i].strip())
+
+        # funçao listar usuarios cadastrados
+        if opcao == "2":
+            with open("usuarios.txt", "r") as arquivo:  # Abre o arquivo de usuários no modo de leitura
+                usuarios = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de usuários
+
+            if len(usuarios) <= 1:
+                print("Não há usuários cadastrados.")
+            else:
+                for i in range(len(usuarios)):
+                    print(usuarios[i].strip())  # Exibe o usuário atual da lista removendo os espaços em branco no início e fim
+
+        #listar reservas
+        if opcao == "3":
+            with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
+                reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+
+            if len(reservas) <= 1:
+                print("Não há reservas cadastradas.")
+            else:
+                print("Lista de reservas:")
+                for reserva in reservas[1:]:  # Itera sobre cada reserva na lista de reservas, começando do índice 1
+                    codigo, usuario, livro, data, status = reserva.strip().split("|")  # Divide os dados da reserva
+                    print(f"{codigo} | {usuario} | {livro} | {data} | {status}")  # Exibe os dados da reserva formatados
+                print("\n")  # Exibe uma linha em branco para separar as informações na saída
+
+        #reservas ativas
+        if opcao == "4":
+            with open("reservas.txt", "r") as arquivo:  # Abre o arquivo de reservas no modo de leitura
+                reservas = arquivo.readlines()  # Lê todas as linhas do arquivo e armazena na lista de reservas
+
+            reservas_finalizadas = [reserva.strip().split("|") for reserva in reservas if reserva.strip().split("|")[4] == "Ativa"]
+
+            if reservas_finalizadas:
+                print("Lista de reservas Ativas:")
+                for reserva in reservas_finalizadas:
+                    codigo, usuario, livro, data, status = reserva
+                    print(f"{codigo} | {usuario} | {livro} | {data} | {status}")
+                print("\n")
+            else:
+                print("Não há reservas Ativas.")
+
+
+
+        # Função para listar reservas finalizadas
+        if opcao == "5":
+            with open("reservas.txt", "r") as arquivo:
+                reservas = arquivo.readlines()
+
+            reservas_ativas = [reserva.strip().split("|") for reserva in reservas if reserva.strip().split("|")[4].strip() == "Finalizada"]
+
+            if reservas_ativas:
+                print("Lista de reservas finalizadas:")
+                for reserva in reservas_ativas:
+                    codigo, usuario, livro, data, status = reserva
+                    print(f"{codigo} | {usuario} | {livro} | {data} | {status}")
+                print("\n"*2)
+            else:
+                print("Nenhuma reservas finalizadas  encontrada.")
+        if opcao == "6":
+            print("Voltando...")
             break
-        else:
-            print("Opção inválida. Tente novamente.")
 
 # Função para gerar relatório
 def gerar_relatorio():
@@ -599,12 +641,11 @@ def main():
         print("2. Cadastrar usuário")
         print("3. Reservar livro")
         print("4. Devolver livro")
-        print("5. Alterar livro")
-        print("6. Alterar usuário")
-        print("7. Remover ")
-        print("8. Pesquisar")
-        print("9. listagem")
-        print("10. gerar relatorio")
+        print("5. Alterar ")
+        print("6. Remover ")
+        print("7. Pesquisar")
+        print("8. listagem")
+        print("9. gerar relatorio")
         print("0. Encerrar programa")
 
         opcao = input("Digite o número da opção desejada: ")
@@ -618,16 +659,14 @@ def main():
         elif opcao == "4":
             devolver_livro()
         elif opcao == "5":
-            alterar_livro()
+            alterar()
         elif opcao == "6":
-            alterar_usuario()
-        elif opcao == "7":
             remover()
+        elif opcao == "7":
+            pesquisar()
         elif opcao == "8":
-            menu_pesquisa()
-        elif opcao == "9":
             listagem()
-        elif opcao == "10":
+        elif opcao == "9":
             gerar_relatorio()
         elif opcao == "0":
             print("Encerrando o programa...")
